@@ -8,17 +8,24 @@ from challenge3 import breakSingleXOR
 from helper import load_file
 
 # decode the lines in the file 
-fileList = list(bytes.fromhex(line) for line in load_file("ch4.txt"))
-
+fileList = load_file("ch4.txt")
+fileList = list(bytes.fromhex(hexString) for hexString in fileList)
 
 # first for each line return the broken XOR
 
-brokenList = []
+def detectXOR(cipherList):
 
-for cipherText in fileList:
+    brokenList = []
+    
+    for i in range(len(fileList)):
+        
+        temp = breakSingleXOR(fileList[i])
+        brokenList.append(temp)
+    
+    key = lambda x: x[-1]
+    return sorted(brokenList, key =key, reverse =True)[0]
 
-    plaintext = breakSingleXOR(cipherText)
-    brokenList.append(plaintext)
-
-key = lambda x: x[-1]
-sorted(brokenList, key =key, reverse =True)
+if __name__ == "__main__":
+    
+    guess = detectXOR(fileList)
+    print("The dectected XOR: \n", guess)
