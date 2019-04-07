@@ -6,8 +6,9 @@ Challenge3: Single-byte XOR Cipher
 """
 
 from challenge2 import xor
+from helper import KeyExpansion
 
-def commonLeterScore(string):
+def commonLetterScore(string):
     commonLetters = "ETAOINSHRDLU"
     vowels = 'aeiou'
 
@@ -16,38 +17,32 @@ def commonLeterScore(string):
         if c.upper() in commonLetters:
             score += 1 
         if c in vowels:
-            score += 1
+            score += 2
     return score
-
-def keyExpansion(n, key):
-    q, r = divmod(n, len(key))
-    return q * key + key[:r]
 
 def breakSingleXOR(ciphertext):
 
     msg = ""
-    highScore = 0
+    highScore = -1
     k = -1
 
     n = len(ciphertext)
-
-    possible_plaintext = []
-
+ #   possible = []
     for key in range(256):
 
-        KEY = keyExpansion(n, chr(key).encode())
+        KEY = KeyExpansion(chr(key).encode(), n)
         plaintext =  xor(ciphertext, KEY).decode(errors="ignore")
+  #      possible.append(plaintext)
 
-        if plaintext == "":
-            return(plaintext, k, highScore)
-
-        if plaintext[0] in "ABCDEFGHIJKLMNOPQRSTUVWXYZ" and " " in plaintext:
-            score = commonLeterScore(plaintext)
-            if score > highScore:
-                highScore = score
-                msg = plaintext
-                k = chr(key)
-            
+        try:
+            if plaintext[0] in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":
+                score = commonLetterScore(plaintext)
+                if score > highScore:
+                    highScore = score
+                    msg = plaintext
+                    k = chr(key)
+        except:
+            pass
     return (msg, k, highScore)
 
 

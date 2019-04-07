@@ -8,17 +8,19 @@ from challenge3 import breakSingleXOR
 from helper import load_file
 
 # decode the lines in the file 
-fileList = list(bytes.fromhex(line) for line in load_file("ch4.txt"))
-
+fileList = load_file("ch4.txt")
+fileList = list(bytes.fromhex(hexString) for hexString in fileList)
 
 # first for each line return the broken XOR
 
 brokenList = []
 
-for cipherText in fileList:
+for i in range(len(fileList)):
 
-    plaintext = breakSingleXOR(cipherText)
-    brokenList.append(plaintext)
+    temp = breakSingleXOR(fileList[i])
+    if i == 170:
+        print(temp)
+
 
 key = lambda x: x[-1]
 sorted(brokenList, key =key, reverse =True)
