@@ -13,14 +13,14 @@ fileList = list(bytes.fromhex(hexString) for hexString in fileList)
 
 # first for each line return the broken XOR
 
-brokenList = []
+def detectXOR(cipherList):
 
-for i in range(len(fileList)):
-
-    temp = breakSingleXOR(fileList[i])
-    if i == 170:
-        print(temp)
-
-
-key = lambda x: x[-1]
-sorted(brokenList, key =key, reverse =True)
+    brokenList = []
+    
+    for i in range(len(fileList)):
+        
+        temp = breakSingleXOR(fileList[i])
+        brokenList.append(temp)
+    
+    key = lambda x: x[-1]
+    return sorted(brokenList, key =key, reverse =True)[0]
