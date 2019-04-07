@@ -9,4 +9,22 @@ def load_file(fileName):
 
     f = open(fileMap[fileName], "r")
     
-    return list(line.strip("\n") for line in f)
+    return list(line.rstrip() for line in f)
+
+def KeyExpansion(key, msg_len):
+
+    if type(key) != bytes:
+        raise TypeError("Key needs to be a bytes string not %s" % type(key))
+    if type(msg_len) != int:
+        raise TypeError("Message Length defined as integer not %s" % type(msg_len))
+    
+    q, r = divmod(msg_len,len(key))
+
+    return q * key + key[:r]
+
+
+def letterFrequency(msg):
+
+    for l in msg:
+
+
