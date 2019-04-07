@@ -22,9 +22,3 @@ def KeyExpansion(key, msg_len):
 
     return q * key + key[:r]
 
-
-def letterFrequency(msg):
-
-    for l in msg:
-
-
