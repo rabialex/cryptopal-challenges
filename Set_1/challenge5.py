@@ -30,4 +30,4 @@ if __name__ == "__main__":
 
     check = vigenereCipher(stanza, key).hex()
 
-    print(check==answer)
+    print("Does the vigenere match: ",check==answer)
