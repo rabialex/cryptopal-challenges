@@ -5,7 +5,6 @@ from helper import load_file
 import base64
 import pprint
 
-
 def AES(msg, key):
 
         

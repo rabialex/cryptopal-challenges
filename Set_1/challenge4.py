@@ -24,3 +24,8 @@ def detectXOR(cipherList):
     
     key = lambda x: x[-1]
     return sorted(brokenList, key =key, reverse =True)[0]
+
+if __name__ == "__main__":
+    
+    guess = detectXOR(fileList)
+    print("The dectected XOR: \n", guess)
