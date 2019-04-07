@@ -22,4 +22,3 @@ for cipherText in fileList:
 
 key = lambda x: x[-1]
 sorted(brokenList, key =key, reverse =True)
-breakpoint()
