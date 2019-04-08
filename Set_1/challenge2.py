@@ -13,7 +13,7 @@ def xor(buffer1, buffer2):
             product of the byte strings
     '''
 
-    assert type(buffer1) == bytes and type(buffer2) == bytes, "TypeERROR input must be of type bytes"
+    #assert type(buffer1) == bytes and type(buffer2) == bytes, "TypeERROR input must be of type bytes not %s and %s" % (type(buffer1), type(buffer2))
 
     return bytes(i^j for i,j in zip(buffer1, buffer2))
 

@@ -27,12 +27,11 @@ def breakSingleXOR(ciphertext):
     k = -1
 
     n = len(ciphertext)
- #   possible = []
+ 
     for key in range(256):
 
         KEY = KeyExpansion(chr(key).encode(), n)
         plaintext =  xor(ciphertext, KEY).decode(errors="ignore")
-  #      possible.append(plaintext)
 
         try:
             if plaintext[0] in "ABCDEFGHIJKLMNOPQRSTUVWXYZ":

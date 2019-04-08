@@ -1,7 +1,11 @@
-def partition(string, keySize):
+from helper import load_file, KeyExpansion
+from challenge2 import xor
+from challenge3 import commonLetterScore
 
-    if type(string) != str or type(keySize) != int:
-        raise TypeError("Inputs are defined as string and integers not %s and %s" % type(string), type(keySize))
+import pprint
+import base64
+
+def partition(string, keySize):
 
     partDict = dict((i, []) for i in range(keySize))
 
@@ -14,10 +18,11 @@ def partition(string, keySize):
 
 def ioc(string):
 
-    if type(string) != str:
-        raise TypeError("Input defined as string not %s" % type(string))
+    try:
+        string = string.replace(" ","").replace("\n","").lower() 
+    except:
+        pass
 
-    string = string.replace(" ","").replace("\n","").lower()  
     freqDict = {}
     
     for c in string:
@@ -34,11 +39,39 @@ def ioc(string):
     
     return p
 
-testString = """To be, or not to be, that is the question—
-Whether 'tis Nobler in the mind to suffer
-The Slings and Arrows of outrageous Fortune,
-Or to take Arms against a Sea of troubles,
-And by opposing end them?
-William Shakespeare - Hamlet"""
+def findKeySize(cipherText, keySizeMax):
 
-print(testString.replace(" ","").replace("\n",""))
+    keyScore = []
+
+    for i in range(2, keySizeMax):
+
+        partCipher = partition(cipherText, i)
+        IOC = ioc(partCipher[0])
+        keyScore.append((i, IOC))
+
+    
+    keyScore = sorted(keyScore, key = lambda x: x[-1], reverse=True)
+    
+    return keyScore
+
+def breakVigenere(cipherText, keySize, idx = 0):
+
+    cipherPart = partition(cipherText, keySize)
+    possibleKey = []
+
+    for part in cipherPart.values():
+
+        part = bytearray(part)
+
+        possibleKey.append(breakSingleXOR(part)[1])
+    
+    
+    return "".join(possibleKey)
+
+
+if __name__ == "__main__":
+    
+    cipherText = "".join(load_file("ch6.txt"))
+    cipherText = base64.b64decode(cipherText)
+
+    check = findKeySize(cipherText, 40)
