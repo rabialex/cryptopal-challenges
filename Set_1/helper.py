@@ -1,6 +1,7 @@
 import os
 
-file_path = "c:\\Users\\rabia\\Documents\\programs\\python\\cryptopals\\cryptopal-challenges\\Set_1\\textFiles\\"
+path = os.getcwd()
+file_path = path + "/cryptopal-challenges/Set_1/textFiles/"
 filesList = ['ch4.txt', 'ch6.txt', 'ch7.txt', 'ch8.txt']
 
 fileMap = {file:file_path+file for file in filesList}
